@@ -1,0 +1,21 @@
+{
+    "name": "Discord modal zoomer",
+    "version": "0.1",
+    "description": "",
+    "author": "O. Inha",
+    "permissions": ["tabs", "activeTab"],
+    "content_scripts": [
+        {
+          "matches": ["*://*.discord.com/*"],
+          "js": [
+            "content_script.js"
+          ],
+          "run_at" : "document_end"
+        }
+    ],
+    "action": {},
+    "host_permissions": [
+      "*://*.discord.com/*"
+    ],
+    "manifest_version": 3
+}
