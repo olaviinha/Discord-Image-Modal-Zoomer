@@ -1,5 +1,5 @@
 const zoom_by_default = true; 	// Zoom in automatically when clicking a thumb in Discord
-const zoom_factor = 1.75;		    // Enlargement (1.5 = 150%, etc.)
+const zoom_factor = 1.75;	// Enlargement (1.5 = 150%, etc.)
 const max_width_to_zoom = 512;	// Disable zoom if image width is larger than this (to avoid auto-zooming already large images)
 const max_height_to_zoom = 512;	// Disable zoom if image height is larger than this (to avoid auto-zooming already large images)
 
