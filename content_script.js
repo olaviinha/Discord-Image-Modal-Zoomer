@@ -6,7 +6,7 @@ const max_height_to_zoom = 720; // Disable zoom if image height is larger than t
 
 var modal, zoomer, actual_zoom_factor, resizer;
 
-let zoom = () => {
+const zoom = () => {
   if (modal.classList.contains('xtZoomed')) {
     modal.classList.remove('xtZoomed');
     modal.style.cursor = 'zoom-in';
@@ -20,7 +20,7 @@ let zoom = () => {
   }
 }
 
-let initZoomer = () => {
+const initZoomer = () => {
 
   let container = document.querySelectorAll('.layerContainer-2v_Sit')[0];
   if (container) {
@@ -41,13 +41,13 @@ let initZoomer = () => {
             actual_zoom_factor = (shortest_win_side / longest_img_side) * max_zoom;
           }
 
-          if (iw <= max_width_to_zoom && ih <= max_height_to_zoom) {
-            img.addEventListener('click', () => { zoom(); });
-            if (zoom_by_default) {
-              zoomer = setTimeout(() => { 
-                if (container.innerHTML != '') zoom(); 
-              }, 500);
-            }
+          img.addEventListener('click', () => { zoom(); });
+          if (zoom_by_default && iw <= max_width_to_zoom && ih <= max_height_to_zoom) {
+            zoomer = setTimeout(() => { 
+              if (container.innerHTML != '') zoom(); 
+            }, 500);
+          } else {
+            modal.style.cursor = 'zoom-in';
           }
 
         }
