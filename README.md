@@ -5,7 +5,7 @@
 ### Settings available in `content_script.js`:
 - Zoom in by default when clicking thumb
 - Zoom amount
-- Max image width/height to zoom (to avoid auto-zooming large images)
+- Max image width/height to auto-zoom
 
 ![discord](https://user-images.githubusercontent.com/50331907/182630382-56f41c64-5191-4493-aa36-16187ca81526.gif)
 
