@@ -1,8 +1,8 @@
 const zoom_by_default = true;   // Zoom in automatically when clicking a thumb in Discord
 const max_zoom_factor = 2;      // Maximum zoom relative to image size (1.5 = 150%, 2 = 200% etc). Applies if viewport is larger than the zoomed modal.
 const max_zoom = 0.85;          // Maximum zoom relative to viewport (0.5 = 50%, 1 = 100% etc). Applies if the zoomed modal is larger than viewport.
-const max_width_to_zoom = 720;  // Disable zoom if image width is larger than this (to avoid auto-zooming already large images)
-const max_height_to_zoom = 720; // Disable zoom if image height is larger than this (to avoid auto-zooming already large images)
+const max_width_to_zoom = 720;  // Don't auto-zoom if image width is larger than this (to avoid auto-zooming already large images)
+const max_height_to_zoom = 720; // Don't auto-zoom if image height is larger than this (to avoid auto-zooming already large images)
 
 var modal, zoomer, actual_zoom_factor, resizer;
 
