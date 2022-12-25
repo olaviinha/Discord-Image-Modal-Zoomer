@@ -10,35 +10,34 @@ let modal, zoomer, actual_zoom_factor, resizer;
 const zoom = () => {
   if (modal && modal.classList.contains('xtZoomed')) {
     if(close_after_zoom){
+      modal.classList.remove('xtZoomed');
       document.querySelectorAll('.backdrop-2ByYRN')[0].click();
     } else {
       modal.classList.remove('xtZoomed');
       modal.style.cursor = 'zoom-in';
-      modal.style.transition = '.25s';
+      modal.style.transition = '.15s';
       modal.style.transform = 'scale(1)';
     }
   } else if (modal) {
     modal.classList.add('xtZoomed');
     modal.style.cursor = 'zoom-out';
-    modal.style.transition = '.25s';
+    modal.style.transition = '.15s';
     modal.style.transform = 'scale('+actual_zoom_factor+')';
   }
 }
 
 const initZoomer = () => {
-
   let container = document.querySelectorAll('.layerContainer-2v_Sit')[0];
   if (container) {
     container.addEventListener('DOMSubtreeModified', () => {
       modal = container.querySelectorAll('[class^="modal-"]')[0];
       if (modal) {
-
         let img = modal.querySelectorAll('img')[0];
         actual_zoom_factor = max_zoom_factor / 100;
-
         if (img) {
           let iw = parseInt(img.style.width);
-          let ih = parseInt(img.style.height);
+          let ih = parseInt(img.style.height);          
+          let prev_iw, prev_ih;
           if (iw * actual_zoom_factor > window.innerWidth * (max_zoom/100) || ih * actual_zoom_factor > window.innerHeight * (max_zoom/100)) {
             let longest_img_side = iw > ih ? iw : ih;
             let shortest_img_side = iw < ih ? iw : ih;
@@ -47,13 +46,19 @@ const initZoomer = () => {
           }
           img.addEventListener('click', () => { zoom(); });
           if (zoom_by_default && iw <= max_width_to_zoom && ih <= max_height_to_zoom) {
-            zoomer = setTimeout(() => { 
-              if (container.innerHTML != '') zoom(); 
-            }, 700);
+            let resize_checker = setInterval(() => {
+              if(iw == prev_iw && ih == prev_ih){
+                clearInterval(resize_checker);
+                zoomer = setTimeout(() => { 
+                  if (container.innerHTML != '') zoom(); 
+                }, 500);
+              }
+              prev_iw = iw;
+              prev_ih = ih;
+            }, 50);
           } else {
             modal.style.cursor = 'zoom-in';
           }
-
         }
       }
     });
@@ -65,7 +70,6 @@ const initZoomer = () => {
       initZoomer();
     }, 300);
   });
-
 }
 
 document.addEventListener('readystatechange', (event) => {
