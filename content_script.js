@@ -3,16 +3,21 @@ const max_zoom_factor = 200;     // Maximum zoom relative to image size in perce
 const max_zoom = 90;             // Maximum zoom relative to viewport in percentage (%).
 const max_width_to_zoom = 1400;  // Don't auto-zoom if image width is larger than this (to avoid auto-zooming already large images)
 const max_height_to_zoom = 1400; // Don't auto-zoom if image height is larger than this (to avoid auto-zooming already large images)
+const close_after_zoom = true;   // Whether to zoom out or close modal when clicking on zoomed image.
 
 let modal, zoomer, actual_zoom_factor, resizer;
 
 const zoom = () => {
-  if (modal.classList.contains('xtZoomed')) {
-    modal.classList.remove('xtZoomed');
-    modal.style.cursor = 'zoom-in';
-    modal.style.transition = '.25s';
-    modal.style.transform = 'scale(1)';
-  } else {
+  if (modal && modal.classList.contains('xtZoomed')) {
+    if(close_after_zoom){
+      document.querySelectorAll('.backdrop-2ByYRN')[0].click();
+    } else {
+      modal.classList.remove('xtZoomed');
+      modal.style.cursor = 'zoom-in';
+      modal.style.transition = '.25s';
+      modal.style.transform = 'scale(1)';
+    }
+  } else if (modal) {
     modal.classList.add('xtZoomed');
     modal.style.cursor = 'zoom-out';
     modal.style.transition = '.25s';
@@ -44,7 +49,7 @@ const initZoomer = () => {
           if (zoom_by_default && iw <= max_width_to_zoom && ih <= max_height_to_zoom) {
             zoomer = setTimeout(() => { 
               if (container.innerHTML != '') zoom(); 
-            }, 500);
+            }, 700);
           } else {
             modal.style.cursor = 'zoom-in';
           }
