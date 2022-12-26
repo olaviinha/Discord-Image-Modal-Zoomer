@@ -6,27 +6,39 @@ const max_height_to_zoom = 1400; // Don't auto-zoom if image height is larger th
 const close_after_zoom = true;   // Whether to zoom out or close modal when clicking on zoomed image.
 
 let modal, zoomer, actual_zoom_factor, resizer;
+let in_progress = false;
 
 const zoom = () => {
-  if (modal && modal.classList.contains('xtZoomed')) {
-    if(close_after_zoom){
-      modal.classList.remove('xtZoomed');
-      document.querySelectorAll('.backdrop-2ByYRN')[0].click();
-    } else {
-      modal.classList.remove('xtZoomed');
-      modal.style.cursor = 'zoom-in';
+  if(!in_progress){
+    if (modal && modal.classList.contains('xtZoomed') && !in_progress) {
+      if(close_after_zoom){
+        console.log('-> close');
+        modal.classList.remove('xtZoomed');
+        document.querySelectorAll('.backdrop-2ByYRN')[0].click();
+        click_disabled = true;
+      } else {
+        console.log('-> zoom out');
+        modal.classList.remove('xtZoomed');
+        modal.style.cursor = 'zoom-in';
+        modal.style.transition = '.15s';
+        modal.style.transform = 'scale(1)';
+      }
+    } else if (modal) {
+      console.log('-> zoom');
+      modal.classList.add('xtZoomed');
+      modal.style.cursor = 'zoom-out';
       modal.style.transition = '.15s';
-      modal.style.transform = 'scale(1)';
+      modal.style.transform = 'scale('+actual_zoom_factor+')';
     }
-  } else if (modal) {
-    modal.classList.add('xtZoomed');
-    modal.style.cursor = 'zoom-out';
-    modal.style.transition = '.15s';
-    modal.style.transform = 'scale('+actual_zoom_factor+')';
-  }
+    in_progress = true;
+    setTimeout(() => {
+      in_progress = false;
+    }, 700);
+  }  
 }
 
 const initZoomer = () => {
+  console.log('initialize');
   let container = document.querySelectorAll('.layerContainer-2v_Sit')[0];
   if (container) {
     container.addEventListener('DOMSubtreeModified', () => {
@@ -50,8 +62,8 @@ const initZoomer = () => {
               if(iw == prev_iw && ih == prev_ih){
                 clearInterval(resize_checker);
                 zoomer = setTimeout(() => { 
-                  if (container.innerHTML != '') zoom(); 
-                }, 500);
+                  if (container.innerHTML != '') zoom();
+                }, 300);
               }
               prev_iw = iw;
               prev_ih = ih;
@@ -63,7 +75,6 @@ const initZoomer = () => {
       }
     });
   }
-
   document.addEventListener('resize', () => {
     clearTimeout(resizer);
     resizer = setTimeout(() => {
