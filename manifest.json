@@ -1,6 +1,6 @@
 {
     "name": "Discord image modal zoomer",
-    "version": "0.3",
+    "version": "0.4",
     "description": "",
     "author": "O. Inha",
     "permissions": ["tabs", "activeTab"],
