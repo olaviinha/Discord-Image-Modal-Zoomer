@@ -5,6 +5,7 @@ const max_width_to_zoom = 1400;  // Don't auto-zoom if image width is larger tha
 const max_height_to_zoom = 1400; // Don't auto-zoom if image height is larger than this (to avoid auto-zooming already large images)
 const close_after_zoom = true;   // Whether to zoom out or close modal when clicking on zoomed image.
 
+const container = '.layerContainer_d5a653';
 let modal, zoomer, actual_zoom_factor, resizer;
 let in_progress = false;
 
@@ -39,7 +40,7 @@ const zoom = () => {
 
 const initZoomer = () => {
   console.log('initialize');
-  let container = document.querySelectorAll('.layerContainer-2v_Sit')[0];
+  let container = document.querySelectorAll(layer_container)[0];
   if (container) {
     container.addEventListener('DOMSubtreeModified', () => {
       modal = container.querySelectorAll('[class^="modal-"]')[0];
