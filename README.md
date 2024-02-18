@@ -1,3 +1,5 @@
+# ❗️ No longer maintained
+
 # Discord Image Modal Zoomer (Chrome Extension)
 
 **MVP** Chrome Extension to zoom image modals on Discord. Disclaimer: This was made for a specific purpose and is not thoroughly tested.
